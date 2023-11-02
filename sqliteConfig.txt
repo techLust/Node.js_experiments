@@ -1,0 +1,4 @@
+Docs: 
+1. https://www.sqlitetutorial.net/sqlite-nodejs/
+
+2. https://medium.com/@codesprintpro/getting-started-sqlite3-with-nodejs-8ef387ad31c4

@@ -1,0 +1,54 @@
+												MONGODB REPLICATON
+												
+1 Go to mongodb path (/var/lib/mongodb) and create folder of how many instance replica required
+
+2. On separate terminal run every mongod command (e.g. sudo mongod --port 27018 --dbpath /var/lib/mongodb/replicaDb1/ --replSet rs0) and let them run.
+
+
+2. Open seperate terminal for each demon and run following commands
+	Demon 1:
+	Ex: sudo mongod --port 27018 --dbpath /var/lib/mongodb/replicaDb1/ --replSet rs0
+	
+	Demon 2:
+	Ex: sudo mongod --port 27019 --dbpath /var/lib/mongodb/replicaDb1/ --replSet rs0
+
+	Demon 3:
+	Ex: sudo mongod --port 27020 --dbpath /var/lib/mongodb/replicaDb1/ --replSet rs0
+	
+3. Connect to some of the daemons started in the step 1, using the MongoDB shell
+	Open mongo shell with port number you want to run shell
+	Ex: mongosh --port 27018
+	
+4. Create a config for each replica set and change id(e.x rs1, rs2) 
+(instead of localhost if we have instance in AWS, GCP of Digitalocean just replace localhost with ip and port)
+(ports will be different for each host)
+	Ex: 
+	rsconfig = {
+  _id: "rs0", //initiate with replica set name
+  members: [
+      {_id: 0, host: "localhost:27018"},
+      {_id: 1, host: "localhost:27019"},
+      {_id: 2, host: "localhost:27020"}
+  ]
+}
+
+5. Initiate the replica set
+	Ex: 
+	rs.initiate(rsconfig)
+	
+6. Shut down replica set
+	use admin; // Switch to the admin database
+	rs.shutdownServer(); // Initiate the server shutdown
+
+7. Check status 
+	Ex:
+	rs.status()
+	
+8. Set read preference to query in mongoshell
+	_> db.getMongo().setReadPref('secondary');
+
+9. For connection string set read preference afeter DB name
+	Ex: mongodb://localhost:27018/cartDb?readPreference=secondary`
+
+	
+	
