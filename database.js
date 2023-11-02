@@ -3,8 +3,8 @@ const mongoose = require('mongoose');
 const sqlite3 = require('sqlite3').verbose();
 
 // MONGO CONNECTION
-mongoose.connect("mongodb://localhost:27017/experiments");
-console.log("Mongodb database connected");
+// mongoose.connect("mongodb://localhost:27017/experiments");
+// console.log("Mongodb database connected");
 
 // SQL CONNECTION
 let db = new sqlite3.Database('./exp_SQLdb.db', err => {
@@ -14,23 +14,43 @@ let db = new sqlite3.Database('./exp_SQLdb.db', err => {
     console.log('SQL database connected')
 });
 
+export default db
 
-// db.serialize(() => {
-//     db.each(`SELECT PlaylistId as id,
-//                     Name as name
-//              FROM playlists`, (err, row) => {
-//       if (err) {
-//         console.error(err.message);
-//       }
-//       console.log(row.id + "\t" + row.name);
-//     });
+// db.run('CREATE TABLE langs(name text)');
+
+// db.run(`INSERT INTO langs(name) VALUES(?)`, ['C'], function(err) {
+//     if (err) {
+//       return console.log(err.message);
+//     }
+//     // get the last insert id
+//     console.log(`A row has been inserted with rowid ${this.lastID}`);
 //   });
 
+
+// db.each(`SELECT name FROM langs`, (err, row) => {
+//     if (err){
+//       throw err;
+//     }
+//     console.log("Message", row.message);
+//   });
+
+// db.serialize(() => {
+//     // Queries scheduled here will be serialized.
+//     db.run('CREATE TABLE greetings(message text)')
+//       .run(`INSERT INTO greetings(message)
+//             VALUES('Hi')`)
+//       .each(`SELECT message FROM greetings`, (err, row) => {
+//         if (err){
+//           throw err;
+//         }
+//         console.log(row.message);
+//       });
+//   });
   
-//Close the database connection
-db.close((err) => {
-    if(err){
-        return console.error(err.message)
-    }
-    console.log('Database connection closed')
-})
+// Close the database connection
+// db.close((err) => {
+//     if(err){
+//         return console.error(err.message)
+//     }
+//     console.log('Database connection closed')
+// })
