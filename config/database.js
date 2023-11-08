@@ -14,7 +14,7 @@ let db = new sqlite3.Database('./exp_SQLdb.db', err => {
     console.log('SQL database connected')
 });
 
-export default db
+// export default db
 
 // db.run('CREATE TABLE langs(name text)');
 
@@ -46,7 +46,12 @@ export default db
 //         console.log(row.message);
 //       });
 //   });
-  
+
+db.each(`SELECT message FROM greetings`, (err, data) => {
+    if(err) throw err
+    console.log('Data', data)
+})
+
 // Close the database connection
 // db.close((err) => {
 //     if(err){
