@@ -1,6 +1,7 @@
 const router = require('express').Router()
-const { sendData } = require('../controllars/morganTest')
+const { registerUser, getUser } = require('../controllars/userControllar')
 
-router.post('/morgan/test', sendData);
+router.post('/register', registerUser);
+router.get('/get', getUser);
 
 module.exports = router

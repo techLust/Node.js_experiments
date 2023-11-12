@@ -1,41 +1,46 @@
-const mongoose = require('mongoose');
-// const sqlite3 = require('sqlite3').verbose();
+// const mongoose = require('mongoose');
+const fs = require('fs')
 const sqlite3 = require('sqlite3').verbose();
+const mysql = require('mysql2')
+const filepath = './SQL_experiment.db'
 
 // MONGO CONNECTION
 // mongoose.connect("mongodb://localhost:27017/experiments");
 // console.log("Mongodb database connected");
 
-// SQL CONNECTION
-let db = new sqlite3.Database('./exp_SQLdb.db', err => {
-    if(err){
-        return console.error(err.message);
-    }
-    console.log('SQL database connected')
-});
-
-// export default db
-
-// db.run('CREATE TABLE langs(name text)');
-
-// db.run(`INSERT INTO langs(name) VALUES(?)`, ['C'], function(err) {
-//     if (err) {
-//       return console.log(err.message);
+// SQLITE CONNECTION
+// const createDbConnection = () => {
+//     if (fs.existsSync(filepath)) {
+//         console.log('Database connected')
+//         return new sqlite3.Database(filepath)
+//     } else {
+//         const db = new sqlite3.Database(filepath, err => {
+//             if (err) {
+//                 return console.error(err.message);
+//             }
+//         });
+//         console.log('SQL database connected')
+//         return db
 //     }
-//     // get the last insert id
-//     console.log(`A row has been inserted with rowid ${this.lastID}`);
-//   });
+// }
+// db = createDbConnection();
+// module.exports = db
 
+// MYSQL CONNECTION
+const connection = mysql.createConnection({
+    host: 'localhost',
+    user: 'Mahatab',
+    password: '123',
+    database: 'testDB'
+  });
 
-// db.each(`SELECT name FROM langs`, (err, row) => {
-//     if (err){
-//       throw err;
-//     }
-//     console.log("Message", row.message);
-//   });
+connection.connect((err) => {
+    if(err) console.log(err)
+    console.log('Database connected')
+})
 
 // db.serialize(() => {
-//     // Queries scheduled here will be serialized.
+// Queries scheduled here will be serialized.
 //     db.run('CREATE TABLE greetings(message text)')
 //       .run(`INSERT INTO greetings(message)
 //             VALUES('Hi')`)
@@ -46,11 +51,6 @@ let db = new sqlite3.Database('./exp_SQLdb.db', err => {
 //         console.log(row.message);
 //       });
 //   });
-
-db.each(`SELECT message FROM greetings`, (err, data) => {
-    if(err) throw err
-    console.log('Data', data)
-})
 
 // Close the database connection
 // db.close((err) => {

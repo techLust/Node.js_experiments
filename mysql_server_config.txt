@@ -1,0 +1,55 @@
+                            MY SQL SERVER CONFIGURATION GUIDE 
+
+REFERENCE: 
+    https://learn.microsoft.com/en-us/sql/linux/quickstart-install-connect-ubuntu?view=sql-server-ver16&tabs=ubuntu2004
+
+    
+>> Import the public repository GPG keys:
+    curl https://packages.microsoft.com/keys/microsoft.asc | sudo tee /etc/apt/trusted.gpg.d/microsoft.asc
+
+>> Register the SQL Server Ubuntu repository:
+    sudo add-apt-repository "$(wget -qO- https://packages.microsoft.com/config/ubuntu/20.04/mssql-server-2022.list)"
+
+>> Install sql server
+    sudo apt-get update
+    sudo apt-get install -y mssql-server
+
+>> Check mysql server status
+    sudo systemctl status mysql.service
+
+>> Log into the CLI
+    sudo mysql
+
+>> Create DB
+    CREATE DATABASE database_name;
+
+>> Show db
+    SHOW DATABASES;
+
+>> Swith db
+    USE database_name;
+
+>> Create table
+    CREATE TABLE table_name
+
+>> Show table
+    SHOW TABLES;
+
+>> Set username and password
+    mysql -u root -p;
+ 
+>> Create new user(replace username and password with yours)
+    CREATE USER 'new_user'@'localhost' IDENTIFIED BY 'password';
+
+>> Grant privileges(all, replace database_name and username)
+    GRANT ALL PRIVILEGES ON your_database_name.* TO 'new_user'@'localhost';
+
+>> Apply changes
+    FLUSH PRIVILEGES;
+
+>> Verify user exists
+    SELECT user, host FROM mysql.user WHERE user = 'username';
+
+>> Check firewal for server port
+
+

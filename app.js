@@ -3,6 +3,7 @@ const app = express();
 require('./config/database')
 const router = require('./routers/mainRouter')
 const morgan = require('morgan')
+const createDbConnection  = require('./config/database')
 
 app.use(express.json())
 
