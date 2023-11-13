@@ -1,12 +1,19 @@
-// const mongoose = require('mongoose');
-const fs = require('fs')
+const mongoose = require('mongoose');
 const sqlite3 = require('sqlite3').verbose();
 const mysql = require('mysql2')
-const filepath = './SQL_experiment.db'
+const fs = require('fs')
+const filepath = './SQL_experiment.db';
 
 // MONGO CONNECTION
-// mongoose.connect("mongodb://localhost:27017/experiments");
-// console.log("Mongodb database connected");
+// const mongodbConnection = () =>{
+//   try{
+//     mongoose.connect("mongodb://localhost:27017/experiments");
+//     console.log("Mongodb database connected");
+//   }catch(e){
+//     console.log(e)
+//   }
+// }
+// mongodbConnection()
 
 // SQLITE CONNECTION
 // const createDbConnection = () => {
@@ -26,7 +33,7 @@ const filepath = './SQL_experiment.db'
 // db = createDbConnection();
 // module.exports = db
 
-// MYSQL CONNECTION
+// MYSQL_SERVER CONNECTION
 const connection = mysql.createConnection({
     host: 'localhost',
     user: 'Mahatab',
@@ -36,23 +43,12 @@ const connection = mysql.createConnection({
 
 connection.connect((err) => {
     if(err) console.log(err)
-    console.log('Database connected')
+    console.log('SQL server database connected')
 })
 
-// db.serialize(() => {
-// Queries scheduled here will be serialized.
-//     db.run('CREATE TABLE greetings(message text)')
-//       .run(`INSERT INTO greetings(message)
-//             VALUES('Hi')`)
-//       .each(`SELECT message FROM greetings`, (err, row) => {
-//         if (err){
-//           throw err;
-//         }
-//         console.log(row.message);
-//       });
-//   });
+module.exports = connection
 
-// Close the database connection
+// CLOSE CONNECTION
 // db.close((err) => {
 //     if(err){
 //         return console.error(err.message)
