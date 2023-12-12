@@ -1,0 +1,22 @@
+Installation: Follow the official documentation
+Link: https://www.postgresql.org/download/linux/ubuntu/
+
+>> Enter postgresql shell
+    sudo -u postgresql psql
+
+>> Crate database
+    CREATE DATABASE your_database_name;
+
+>> Check roles 
+    \du
+
+>> Show database
+    \l
+
+>> Swith database
+    \c 'db name'
+
+>> Show table
+    \dt 
+
+>> 

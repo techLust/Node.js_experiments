@@ -4,9 +4,11 @@ require('./config/database')
 const router = require('./routers/mainRouter')
 const morgan = require('morgan')
 const createDbConnection  = require('./config/database')
+const dotenv = require('dotenv').config()
+
+const PORT = process.env.SERVER_PORT || 8080
 
 app.use(express.json())
-
 app.use(morgan('dev'))
 
 
@@ -16,5 +18,5 @@ app.use(morgan('dev'))
 
 app.use('/', router)
 
-app.listen(3000, () => console.log('Server running on 3000'))
+app.listen(PORT, () => console.log(`Server running on ${PORT}`))
 

@@ -1,8 +1,10 @@
+const fs = require('fs')
+require('dotenv').config()
 const mongoose = require('mongoose');
 const sqlite3 = require('sqlite3').verbose();
-const mysql = require('mysql2')
-const fs = require('fs')
 const filepath = './SQL_experiment.db';
+const mysql = require('mysql2')
+const { Client } = require('pg')
 
 // MONGO CONNECTION
 // const mongodbConnection = () =>{
@@ -34,19 +36,40 @@ const filepath = './SQL_experiment.db';
 // module.exports = db
 
 // MYSQL_SERVER CONNECTION
-const connection = mysql.createConnection({
-    host: 'localhost',
-    user: 'Mahatab',
-    password: '123',
-    database: 'testDB'
-  });
+// const connection = mysql.createConnection({
+//   host: process.env.HOST,
+//   user: process.env.MYSQL_SERVER_USER,
+//   password: process.env.MYSQL_SERVER_PASS,
+//   database: 'testDB'
+// });
 
-connection.connect((err) => {
-    if(err) console.log(err)
-    console.log('SQL server database connected')
-})
+// connection.connect((err) => {
+//   if (err) console.log(err)
+//   console.log('SQL server database connected')
+// })
+// module.exports = connection
 
-module.exports = connection
+// POSTGRESQL CONNECTION  
+const connectionString = `postgresql://
+${process.env.POSTGRES_USER}:
+${process.env.POSTGRES_PASS}@
+${process.env.HOST}:
+${process.env.POSTGRES_PORT}/
+${process.env.POSTGRES_DB}`;
+
+const pgClient = new Client({ connectionString });
+
+pgClient.connect()
+  .then(() => {
+    console.log('Postgres database connected ')
+    return dbName = pgClient.query('SELECT datname from pg_database;')
+  })
+  // .then((result) => {
+  //   console.log('DB NAME', result.rows[3].datname)
+  // })
+  .catch(err => console.error('Error connecting to the database', err));
+
+  module.exports = pgClient;
 
 // CLOSE CONNECTION
 // db.close((err) => {
